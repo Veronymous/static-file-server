@@ -10,3 +10,7 @@
 
 * The location can also be configured in the application file.
 
+## Build
+
+`mvn package`
+Executable - `./target/appassembler/bin/static-file-server-application`;
