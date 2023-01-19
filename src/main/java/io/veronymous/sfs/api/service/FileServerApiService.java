@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class FileServerApiService {
 
     private static final String DIGEST = "Digest";
-    private static final String SHA_256 = "sha-256";
 
     private final FileCacheService fileCache;
 
@@ -23,7 +22,7 @@ public class FileServerApiService {
         String contents = this.fileCache.getFileContents(filename);
 
         return ResponseEntity.ok()
-                .header(DIGEST, SHA_256 + "=" + metadata.getDigest())
+                .header(DIGEST, metadata.getDigest())
                 .body(contents);
     }
 

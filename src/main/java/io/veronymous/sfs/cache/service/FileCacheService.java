@@ -22,6 +22,7 @@ public class FileCacheService {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileCacheService.class);
 
     private static final String JSON = "json";
+    private static final String SHA_256 = "sha-256";
 
     private final FileCache fileCache;
     private final FileMetadataCache metadataCache;
@@ -84,7 +85,7 @@ public class FileCacheService {
 
         digest.update(contents.getBytes(StandardCharsets.UTF_8));
 
-        return Base64.getEncoder().encodeToString(digest.digest());
+        return SHA_256 + "=" + Base64.getEncoder().encodeToString(digest.digest());
     }
 
     private static String getFileExtension(File file) {

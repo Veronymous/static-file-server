@@ -3,3 +3,6 @@ logging:
     io:
       veronymous:
         sfs: DEBUG
+
+server:
+  port: 4001
