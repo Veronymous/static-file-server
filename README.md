@@ -14,3 +14,7 @@
 
 `mvn package`
 Executable - `./target/appassembler/bin/static-file-server-application`;
+
+*Build image*
+
+`mvn spring-boot:build-image`
