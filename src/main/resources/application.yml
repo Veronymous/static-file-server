@@ -5,4 +5,7 @@ logging:
         sfs: DEBUG
 
 server:
-  port: 4001
+  port: 9090
+
+file-watcher:
+    enabled: false

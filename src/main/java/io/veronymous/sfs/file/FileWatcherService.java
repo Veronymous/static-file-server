@@ -19,13 +19,16 @@ public class FileWatcherService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileWatcherService.class.getName());
 
+    private final boolean fileWatcherEnabled;
     private final Path filesDir;
     private final TaskExecutor taskExecutor;
     private final FileCacheService fileCache;
 
-    public FileWatcherService(@Value("${files-dir:/etc/static-file-server/files}") Path filesDir,
+    public FileWatcherService(@Value("${file-watcher.enabled}") boolean fileWatcherEnabled,
+                              @Value("${files-dir:/etc/static-file-server/files}") Path filesDir,
                               TaskExecutor taskExecutor,
                               FileCacheService fileCache) {
+        this.fileWatcherEnabled = fileWatcherEnabled;
         this.filesDir = filesDir;
         this.taskExecutor = taskExecutor;
         this.fileCache = fileCache;
@@ -35,7 +38,8 @@ public class FileWatcherService {
     public void setup() throws IOException {
         this.loadFiles();
 
-        this.startWatcher();
+        if (this.fileWatcherEnabled)
+            this.startWatcher();
     }
 
     private void loadFiles() {
@@ -74,7 +78,7 @@ public class FileWatcherService {
                 }
 
                 // Get the events
-                for (WatchEvent<?> event: key.pollEvents()) {
+                for (WatchEvent<?> event : key.pollEvents()) {
                     if (ENTRY_CREATE.equals(event.kind()))
                         this.processEntryCreate((WatchEvent<Path>) event);
                     else if (ENTRY_MODIFY.equals(event.kind()))
